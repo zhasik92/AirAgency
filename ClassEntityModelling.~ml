@@ -40,7 +40,7 @@
 <XPD:ATTR name="Left" type="integer">144</XPD:ATTR>
 <XPD:ATTR name="Top" type="integer">112</XPD:ATTR>
 <XPD:ATTR name="Width" type="integer">198</XPD:ATTR>
-<XPD:ATTR name="Height" type="integer">225</XPD:ATTR>
+<XPD:ATTR name="Height" type="integer">186</XPD:ATTR>
 <XPD:REF name="Model">HplxcJg3n0msABZQcvMZ4gAA</XPD:REF>
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="WjuFlMHYNESKT8fl2p5VsQAA">
 <XPD:OBJ name="NameLabel" type="LabelView" guid="yEr4AiWgPEGcmgWPj0FqpwAA">
@@ -200,7 +200,7 @@
 <XPD:REF name="Views[1]">P/UIqWZDvk+I7Ke35oG4kgAA</XPD:REF>
 <XPD:REF name="Views[2]">hYQ9EMptrE2hC4HyH3MBeAAA</XPD:REF>
 <XPD:REF name="Views[3]">K4+W7fO7PUaZW059bml9HQAA</XPD:REF>
-<XPD:ATTR name="#Operations" type="integer">9</XPD:ATTR>
+<XPD:ATTR name="#Operations" type="integer">7</XPD:ATTR>
 <XPD:OBJ name="Operations[0]" type="UMLOperation" guid="LhHNkeyjQk6w3fyFfrgKsQAA">
 <XPD:ATTR name="Name" type="string">setPrice</XPD:ATTR>
 <XPD:REF name="Owner">HplxcJg3n0msABZQcvMZ4gAA</XPD:REF>
@@ -251,27 +251,7 @@
 <XPD:REF name="BehavioralFeature">z+56Tku+RUWs+ckPZbZdXQAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
-<XPD:OBJ name="Operations[5]" type="UMLOperation" guid="tv5fDPykNEiehgpU2wXUsQAA">
-<XPD:ATTR name="Name" type="string">setStatus</XPD:ATTR>
-<XPD:REF name="Owner">HplxcJg3n0msABZQcvMZ4gAA</XPD:REF>
-<XPD:ATTR name="#Parameters" type="integer">1</XPD:ATTR>
-<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="M+bkO7C6LUCfum4lj49z7AAA">
-<XPD:ATTR name="Name" type="string">status</XPD:ATTR>
-<XPD:ATTR name="TypeExpression" type="string">Status</XPD:ATTR>
-<XPD:REF name="BehavioralFeature">tv5fDPykNEiehgpU2wXUsQAA</XPD:REF>
-</XPD:OBJ>
-</XPD:OBJ>
-<XPD:OBJ name="Operations[6]" type="UMLOperation" guid="jbEI6m+cFE2QvCRdRoks+gAA">
-<XPD:ATTR name="Name" type="string">getStatus</XPD:ATTR>
-<XPD:REF name="Owner">HplxcJg3n0msABZQcvMZ4gAA</XPD:REF>
-<XPD:ATTR name="#Parameters" type="integer">1</XPD:ATTR>
-<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="Ysbf1EYomUG0EkSI0eaAjwAA">
-<XPD:ATTR name="Name" type="string">status</XPD:ATTR>
-<XPD:ATTR name="TypeExpression" type="string">Status</XPD:ATTR>
-<XPD:REF name="BehavioralFeature">jbEI6m+cFE2QvCRdRoks+gAA</XPD:REF>
-</XPD:OBJ>
-</XPD:OBJ>
-<XPD:OBJ name="Operations[7]" type="UMLOperation" guid="EdEQ/+ZzSkGMlzWgJA8YOAAA">
+<XPD:OBJ name="Operations[5]" type="UMLOperation" guid="EdEQ/+ZzSkGMlzWgJA8YOAAA">
 <XPD:ATTR name="Name" type="string">getPassenger</XPD:ATTR>
 <XPD:REF name="Owner">HplxcJg3n0msABZQcvMZ4gAA</XPD:REF>
 <XPD:ATTR name="#Parameters" type="integer">1</XPD:ATTR>
@@ -281,7 +261,7 @@
 <XPD:REF name="BehavioralFeature">EdEQ/+ZzSkGMlzWgJA8YOAAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
-<XPD:OBJ name="Operations[8]" type="UMLOperation" guid="gCoEsUcQgkeiH2yTu3Xc5gAA">
+<XPD:OBJ name="Operations[6]" type="UMLOperation" guid="gCoEsUcQgkeiH2yTu3Xc5gAA">
 <XPD:ATTR name="Name" type="string">getFlight</XPD:ATTR>
 <XPD:REF name="Owner">HplxcJg3n0msABZQcvMZ4gAA</XPD:REF>
 <XPD:ATTR name="#Parameters" type="integer">1</XPD:ATTR>
@@ -293,7 +273,7 @@
 </XPD:OBJ>
 <XPD:ATTR name="#TypedParameters" type="integer">1</XPD:ATTR>
 <XPD:REF name="TypedParameters[0]">MarmjCZExUuJ9TjM4DoEcQAA</XPD:REF>
-<XPD:ATTR name="#Attributes" type="integer">5</XPD:ATTR>
+<XPD:ATTR name="#Attributes" type="integer">4</XPD:ATTR>
 <XPD:OBJ name="Attributes[0]" type="UMLAttribute" guid="TRvQynJPgUCuX3fflefwzAAA">
 <XPD:ATTR name="Name" type="string">id</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
@@ -316,12 +296,6 @@
 <XPD:ATTR name="Name" type="string">flight</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">Flight</XPD:ATTR>
-<XPD:REF name="Owner">HplxcJg3n0msABZQcvMZ4gAA</XPD:REF>
-</XPD:OBJ>
-<XPD:OBJ name="Attributes[4]" type="UMLAttribute" guid="R6d7evgjLEOMd1oTRKLZNQAA">
-<XPD:ATTR name="Name" type="string">status</XPD:ATTR>
-<XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
-<XPD:ATTR name="TypeExpression" type="string">Status</XPD:ATTR>
 <XPD:REF name="Owner">HplxcJg3n0msABZQcvMZ4gAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
