@@ -255,9 +255,9 @@
 <XPD:ATTR name="Name" type="string">setStatus</XPD:ATTR>
 <XPD:REF name="Owner">HplxcJg3n0msABZQcvMZ4gAA</XPD:REF>
 <XPD:ATTR name="#Parameters" type="integer">1</XPD:ATTR>
-<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="M+bkO7C6LUCfum4lj49z7AAA">
+<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="KoE9knU4IE2qlIFBmt7qYAAA">
 <XPD:ATTR name="Name" type="string">status</XPD:ATTR>
-<XPD:ATTR name="TypeExpression" type="string">Status</XPD:ATTR>
+<XPD:ATTR name="TypeExpression" type="string">boolean</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">tv5fDPykNEiehgpU2wXUsQAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
@@ -265,9 +265,9 @@
 <XPD:ATTR name="Name" type="string">getStatus</XPD:ATTR>
 <XPD:REF name="Owner">HplxcJg3n0msABZQcvMZ4gAA</XPD:REF>
 <XPD:ATTR name="#Parameters" type="integer">1</XPD:ATTR>
-<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="Ysbf1EYomUG0EkSI0eaAjwAA">
+<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="coQxktT5hU+2WgTUQIsYNQAA">
 <XPD:ATTR name="Name" type="string">status</XPD:ATTR>
-<XPD:ATTR name="TypeExpression" type="string">Status</XPD:ATTR>
+<XPD:ATTR name="TypeExpression" type="string">boolean</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">jbEI6m+cFE2QvCRdRoks+gAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
@@ -321,7 +321,7 @@
 <XPD:OBJ name="Attributes[4]" type="UMLAttribute" guid="R6d7evgjLEOMd1oTRKLZNQAA">
 <XPD:ATTR name="Name" type="string">status</XPD:ATTR>
 <XPD:ATTR name="Visibility" type="UMLVisibilityKind">vkPrivate</XPD:ATTR>
-<XPD:ATTR name="TypeExpression" type="string">Status</XPD:ATTR>
+<XPD:ATTR name="TypeExpression" type="string">boolean</XPD:ATTR>
 <XPD:REF name="Owner">HplxcJg3n0msABZQcvMZ4gAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
