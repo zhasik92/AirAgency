@@ -7,6 +7,11 @@ import java.math.BigInteger;
  */
 public abstract class HasIdObject {
     private BigInteger id;
+
+    public HasIdObject(BigInteger id) {
+        this.id = id;
+    }
+
     public BigInteger getId(){
         return id;
     }
