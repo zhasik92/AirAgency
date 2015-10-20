@@ -1,5 +1,6 @@
 package entity;
 
+import java.math.BigInteger;
 import java.sql.Time;
 
 /**
@@ -11,6 +12,15 @@ public class Flight extends HasIdObject {
     private Time departureTime;
     private Time arrivalTime;
     private Airplane airplane;
+
+    public Flight(BigInteger id, City from, City to, Time departureTime, Time arrivalTime, Airplane airplane) {
+        super(id);
+        this.from = from;
+        this.to = to;
+        this.departureTime = departureTime;
+        this.arrivalTime = arrivalTime;
+        this.airplane = airplane;
+    }
 
     public City getFrom() {
         return from;
