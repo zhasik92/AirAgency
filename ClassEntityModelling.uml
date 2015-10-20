@@ -1001,7 +1001,7 @@
 <XPD:REF name="Views[3]">vz+1ur/T+kOoTYwWn11dwgAA</XPD:REF>
 <XPD:ATTR name="#Generalizations" type="integer">1</XPD:ATTR>
 <XPD:REF name="Generalizations[0]">4AAJN2FF3U2JGIdFSFOc/wAA</XPD:REF>
-<XPD:ATTR name="#Operations" type="integer">1</XPD:ATTR>
+<XPD:ATTR name="#Operations" type="integer">2</XPD:ATTR>
 <XPD:OBJ name="Operations[0]" type="UMLOperation" guid="M9plP0sUSUm0uZYYr1KU0QAA">
 <XPD:ATTR name="Name" type="string">getCapacity</XPD:ATTR>
 <XPD:REF name="Owner">7+nIYTS6/kCMUl7NJ3u+SAAA</XPD:REF>
@@ -1010,6 +1010,16 @@
 <XPD:ATTR name="DirectionKind" type="UMLParameterDirectionKind">pdkReturn</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">int</XPD:ATTR>
 <XPD:REF name="BehavioralFeature">M9plP0sUSUm0uZYYr1KU0QAA</XPD:REF>
+</XPD:OBJ>
+</XPD:OBJ>
+<XPD:OBJ name="Operations[1]" type="UMLOperation" guid="RM04UzTb902jp3acLuV0YgAA">
+<XPD:ATTR name="Name" type="string">setCapacity</XPD:ATTR>
+<XPD:REF name="Owner">7+nIYTS6/kCMUl7NJ3u+SAAA</XPD:REF>
+<XPD:ATTR name="#Parameters" type="integer">1</XPD:ATTR>
+<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="6okB+Yu9o0WSiMNqPbC29QAA">
+<XPD:ATTR name="Name" type="string">capacity</XPD:ATTR>
+<XPD:ATTR name="TypeExpression" type="string">int</XPD:ATTR>
+<XPD:REF name="BehavioralFeature">RM04UzTb902jp3acLuV0YgAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
 <XPD:ATTR name="#TypedParameters" type="integer">1</XPD:ATTR>
