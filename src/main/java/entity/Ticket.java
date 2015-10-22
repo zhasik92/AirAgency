@@ -13,9 +13,9 @@ public class Ticket extends HasIdObject {
 
     public Ticket(BigInteger id, Passenger passenger, double price, Flight flight, boolean status) {
         super(id);
-        this.passenger = passenger;
-        this.price = price;
-        this.flight = flight;
+        setPassenger(passenger);
+        setPrice(price);
+        setFlight(flight);
         this.status = status;
     }
 
@@ -24,6 +24,9 @@ public class Ticket extends HasIdObject {
     }
 
     public void setPrice(double price) {
+        if (price < 0) {
+            throw new IllegalArgumentException();
+        }
         this.price = price;
     }
 
@@ -32,6 +35,9 @@ public class Ticket extends HasIdObject {
     }
 
     public void setPassenger(Passenger passenger) {
+        if (passenger == null) {
+            throw new NullPointerException();
+        }
         this.passenger = passenger;
     }
 
@@ -40,6 +46,9 @@ public class Ticket extends HasIdObject {
     }
 
     public void setFlight(Flight flight) {
+        if (flight == null) {
+            throw new NullPointerException();
+        }
         this.flight = flight;
     }
 

@@ -9,10 +9,17 @@ public abstract class HasIdObject {
     private BigInteger id;
 
     public HasIdObject(BigInteger id) {
-        this.id = id;
+        setId(id);
     }
 
-    public BigInteger getId(){
+    private void setId(BigInteger id){
+        if(id.compareTo(BigInteger.ZERO)<0){
+            throw new IllegalArgumentException();
+        }
+        this.id=id;
+    }
+
+    public BigInteger getId() {
         return id;
     }
 

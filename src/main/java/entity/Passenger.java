@@ -1,6 +1,7 @@
 package entity;
 
 
+import java.math.BigInteger;
 import java.sql.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -8,7 +9,8 @@ import java.util.regex.Pattern;
 /**
  * Created by Zhassulan on 20.10.2015.
  */
-public class Passenger {
+public class Passenger extends HasIdObject {
+    private BigInteger id;
     private String email;
     private String firstName;
     private String secondName;
@@ -16,7 +18,8 @@ public class Passenger {
     private String passportNumber;
     private String citizenship;
 
-    public Passenger(String passportNumber, String citizenship) {
+    public Passenger(BigInteger id, String passportNumber, String citizenship) {
+        super(id);
         this.passportNumber = passportNumber;
         this.citizenship = citizenship;
     }
@@ -26,10 +29,10 @@ public class Passenger {
     }
 
     public void setEmail(String email) {
-        Pattern pattern=Pattern.compile("^[_A-Za-z0-9-\\\\+]+(\\\\.[_A-Za-z0-9-]+)*@\"\n" +
+        Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\\\+]+(\\\\.[_A-Za-z0-9-]+)*@\"\n" +
                 "\t\t+ \"[A-Za-z0-9-]+(\\\\.[A-Za-z0-9]+)*(\\\\.[A-Za-z]{2,})$");
-        Matcher matcher=pattern.matcher(email);
-        if(!matcher.matches()){
+        Matcher matcher = pattern.matcher(email);
+        if (!matcher.matches()) {
             throw new IllegalArgumentException();
         }
         this.email = email;
@@ -64,6 +67,11 @@ public class Passenger {
     }
 
     public void setPassportNumber(String passportNumber) {
+        Pattern pattern = Pattern.compile("^[A-Za-z]+[0-9]*$");
+        Matcher matcher = pattern.matcher(passportNumber);
+        if (!matcher.matches()) {
+            throw new IllegalArgumentException();
+        }
         this.passportNumber = passportNumber;
     }
 

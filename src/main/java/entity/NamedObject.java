@@ -13,7 +13,9 @@ public abstract class NamedObject {
         return name;
     }
     public void setName(String name){
-        if(name==null) throw new NullPointerException();
+        if(name==null) {
+            throw new NullPointerException();
+        }
         this.name=name;
     }
 }

@@ -15,11 +15,11 @@ public class Flight extends HasIdObject {
 
     public Flight(BigInteger id, City from, City to, Time departureTime, Time arrivalTime, Airplane airplane) {
         super(id);
-        this.from = from;
-        this.to = to;
-        this.departureTime = departureTime;
-        this.arrivalTime = arrivalTime;
-        this.airplane = airplane;
+        setFrom(from);
+        setTo(to);
+        setDepartureTime(departureTime);
+        setArrivalTime(arrivalTime);
+        setAirplane(airplane);
     }
 
     public City getFrom() {
@@ -27,6 +27,9 @@ public class Flight extends HasIdObject {
     }
 
     public void setFrom(City from) {
+        if (from == null) {
+            throw new NullPointerException();
+        }
         this.from = from;
     }
 
@@ -35,6 +38,9 @@ public class Flight extends HasIdObject {
     }
 
     public void setTo(City to) {
+        if (to == null) {
+            throw new NullPointerException();
+        }
         this.to = to;
     }
 
@@ -43,6 +49,9 @@ public class Flight extends HasIdObject {
     }
 
     public void setDepartureTime(Time departureTime) {
+        if (departureTime == null) {
+            throw new NullPointerException();
+        }
         this.departureTime = departureTime;
     }
 
@@ -51,6 +60,9 @@ public class Flight extends HasIdObject {
     }
 
     public void setArrivalTime(Time arrivalTime) {
+        if (arrivalTime == null) {
+            throw new NullPointerException();
+        }
         this.arrivalTime = arrivalTime;
     }
 
@@ -59,6 +71,9 @@ public class Flight extends HasIdObject {
     }
 
     public void setAirplane(Airplane airplane) {
+        if (airplane == null) {
+            throw new NullPointerException();
+        }
         this.airplane = airplane;
     }
 }
