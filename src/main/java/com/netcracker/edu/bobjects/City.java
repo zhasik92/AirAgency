@@ -1,4 +1,4 @@
-package entity;
+package com.netcracker.edu.bobjects;
 
 /**
  * Created by Zhassulan on 20.10.2015.

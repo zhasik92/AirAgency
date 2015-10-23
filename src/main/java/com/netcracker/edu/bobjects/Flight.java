@@ -1,4 +1,4 @@
-package entity;
+package com.netcracker.edu.bobjects;
 
 import java.math.BigInteger;
 import java.sql.Time;
