@@ -1,6 +1,7 @@
 package com.netcracker.edu.bobjects;
 
 
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.sql.Date;
 import java.util.regex.Matcher;
@@ -9,32 +10,43 @@ import java.util.regex.Pattern;
 /**
  * Created by Zhassulan on 20.10.2015.
  */
-public class Passenger extends HasIdObject {
-    private BigInteger id;
+public class Passenger extends HasIdObject implements Serializable {
     private String email;
     private String firstName;
-    private String secondName;
+    private String lastName;
     private Date dateOfBirth;
     private String passportNumber;
     private String citizenship;
 
-    public Passenger(BigInteger id, String passportNumber, String citizenship) {
+    /*public Passenger(BigInteger id, String passportNumber, String citizenship) {
         super(id);
-        this.passportNumber = passportNumber;
-        this.citizenship = citizenship;
+        setPassportNumber(passportNumber);
+        setCitizenship(citizenship);
+    }*/
+
+    // i'll refactor this latter, builder pattern is better
+    public Passenger(BigInteger id, String email, String firstName, String lastName, Date dateOfBirth, String passportNumber, String citizenship) {
+        super(id);
+        setEmail(email);
+        setFirstName(firstName);
+        setLastName(lastName);
+        setDateOfBirth(dateOfBirth);
+        setPassportNumber(passportNumber);
+        setCitizenship(citizenship);
     }
 
     public String getEmail() {
         return email;
     }
 
+    //i'll fix regex later
     public void setEmail(String email) {
         Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\\\+]+(\\\\.[_A-Za-z0-9-]+)*@\"\n" +
                 "\t\t+ \"[A-Za-z0-9-]+(\\\\.[A-Za-z0-9]+)*(\\\\.[A-Za-z]{2,})$");
         Matcher matcher = pattern.matcher(email);
-        if (!matcher.matches()) {
-            throw new IllegalArgumentException();
-        }
+       /* if (!matcher.matches()) {
+            throw new IllegalArgumentException("invalid email address");
+        }*/
         this.email = email;
     }
 
@@ -46,12 +58,12 @@ public class Passenger extends HasIdObject {
         this.firstName = firstName;
     }
 
-    public String getSecondName() {
-        return secondName;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public Date getDateOfBirth() {
@@ -67,10 +79,10 @@ public class Passenger extends HasIdObject {
     }
 
     public void setPassportNumber(String passportNumber) {
-        Pattern pattern = Pattern.compile("^[A-Za-z]+[0-9]*$");
+        Pattern pattern = Pattern.compile("^[A-Za-z]?[0-9]*$");
         Matcher matcher = pattern.matcher(passportNumber);
         if (!matcher.matches()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("invalid passport number");
         }
         this.passportNumber = passportNumber;
     }
@@ -84,14 +96,14 @@ public class Passenger extends HasIdObject {
     }
 
     @Override
+    // TODO: 04.01.2016 CHECK EQUALS AND HASHCODE
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         Passenger passenger = (Passenger) o;
 
-        if (!passportNumber.equals(passenger.passportNumber)) return false;
-        return citizenship.equals(passenger.citizenship);
+        return passportNumber.equals(passenger.passportNumber) && citizenship.equals(passenger.citizenship);
 
     }
 

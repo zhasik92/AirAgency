@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
-    <file url="file://$PROJECT_DIR$/README.TXT" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java/entity/Airplane.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java/entity/City.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java/entity/Flight.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java/entity/HasIdObject.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java/entity/NamedObject.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java/entity/Passenger.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java/entity/Ticket.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java/util/IdGenerator.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/test/java/util/IdGeneratorTest.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/netcracker/edu/bobjects/Airplane.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/netcracker/edu/bobjects/City.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/netcracker/edu/bobjects/Flight.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/netcracker/edu/bobjects/HasIdObject.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/netcracker/edu/bobjects/NamedObject.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/netcracker/edu/bobjects/Passenger.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/netcracker/edu/bobjects/Ticket.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/netcracker/edu/util/IdGenerator.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/test/java/com/netcracker/edu/util/IdGeneratorTest.java" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

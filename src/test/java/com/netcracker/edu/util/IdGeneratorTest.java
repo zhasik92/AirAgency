@@ -1,4 +1,4 @@
-package util;
+package com.netcracker.edu.util;
 
 import org.junit.Assert;
 import org.junit.Test;
