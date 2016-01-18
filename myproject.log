@@ -1,0 +1,10 @@
+18:31:56,402 ERROR Thread-0 PropertiesHandler:<clinit>:28 - java.io.FileNotFoundException: src\config.properties (Не удается найти указанный файл)
+18:33:29,148 ERROR Thread-0 JDBCPool:<init>:33 - java.sql.SQLException: ORA-00604: error occurred at recursive SQL level 1
+ORA-12705: Cannot access NLS data files or invalid environment specified
+
+18:40:24,912 ERROR main JDBCPool:<init>:33 - java.sql.SQLException: ORA-00604: error occurred at recursive SQL level 1
+ORA-12705: Cannot access NLS data files or invalid environment specified
+
+18:42:21,225 ERROR main JDBCPool:<init>:33 - java.sql.SQLException: ORA-00604: error occurred at recursive SQL level 1
+ORA-12705: Cannot access NLS data files or invalid environment specified
+
