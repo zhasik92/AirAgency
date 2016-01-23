@@ -7,9 +7,7 @@ import com.netcracker.edu.session.SecurityContextHolder;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.security.AccessControlException;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -40,24 +38,13 @@ public class SignInCommand extends AbstractCommand {
 
     @Override
     protected int execute(String[] parameters) throws IOException {
-        User user;
-        String login;
-        char[] password;
-        if (parameters == null || parameters.length < 1) {
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            logger.info("enter login");
-            login = br.readLine();
-            logger.info("enter password");
-            password = br.readLine().toCharArray();
-        } else {
-            if (parameters.length != 2) {
-                throw new IllegalArgumentException("required 2 parameters");
-            }
-            login = parameters[0];
-            password = parameters[1].toCharArray();
+        if (parameters.length != 2) {
+            throw new IllegalArgumentException("required 2 parameters");
         }
+        String login = parameters[0];
+        char[] password = parameters[1].toCharArray();
         try {
-            user = dao.findUserByLogin(login);
+            User user = dao.findUserByLogin(login);
             if (user == null || !Arrays.equals(user.getPassword(), password)) {
                 logger.warn("Login and password are incorrect");
                 return 1;
@@ -73,6 +60,6 @@ public class SignInCommand extends AbstractCommand {
 
     @Override
     public String getHelp() {
-        return "SignInCommand usage:" + "\"" + getName() + "\"" + " or \"" + getName() + "login password\"";
+        return "SignInCommand usage:" + "\"" + getName() + " login password\"";
     }
 }

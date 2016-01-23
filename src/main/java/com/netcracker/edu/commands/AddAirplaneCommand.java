@@ -7,9 +7,7 @@ import com.netcracker.edu.dao.DAObject;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.SQLException;
 
 
@@ -32,22 +30,12 @@ public class AddAirplaneCommand extends AbstractCommand {
 
     @Override
     protected int execute(String[] parameters) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String airplaneName;
-        Integer capacity;
-        if (parameters == null || parameters.length < 1) {
-            logger.info("Enter name of Airplane:");
-            airplaneName = br.readLine();
-            logger.info("write capacity");
-            capacity = Integer.parseInt(br.readLine());
-        } else {
-            if (parameters.length != 2) {
-                logger.error("illegal arguments");
-                throw new IllegalArgumentException();
-            }
-            airplaneName = parameters[0];
-            capacity = Integer.parseInt(parameters[1]);
+        if (parameters.length != 2) {
+            logger.error("illegal arguments");
+            throw new IllegalArgumentException();
         }
+        String airplaneName = parameters[0];
+        int capacity = Integer.parseInt(parameters[1]);
         try {
             Airplane airplane = dao.findAirplaneByName(airplaneName);
             if (airplane != null) {
@@ -57,8 +45,9 @@ public class AddAirplaneCommand extends AbstractCommand {
 
             airplane = new Airplane(airplaneName, capacity);
             dao.addAirplane(airplane);
-            logger.trace("airplane added");
+            logger.info("airplane added");
             return 0;
+
         } catch (SQLException sqle) {
             logger.error(sqle);
             return -1;

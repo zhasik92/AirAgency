@@ -12,6 +12,7 @@ public class DAOFactory {
     private static final DAObject DAO_INSTANCE;
 
     static {
+        PropertiesHandler.init();
         if ("OracleDAO".equals(PropertiesHandler.getDAO())) {
             DAO_INSTANCE = OracleDAO.getInstance();
             logger.trace("Factory initialized OracleDAO");

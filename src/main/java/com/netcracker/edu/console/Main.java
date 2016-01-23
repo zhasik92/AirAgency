@@ -13,7 +13,6 @@ import java.text.ParseException;
  */
 public class Main {
     private static final Logger logger = LogManager.getLogger(Main.class);
-
     public static void main(String[] args) throws ParseException, SQLException {
         try {
            /* switch (args[0].toLowerCase()) {

@@ -8,9 +8,7 @@ import com.netcracker.edu.util.IdGenerator;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -38,44 +36,18 @@ public class BuyTicketToShortestRouteCommand extends AbstractCommand {
 
     @Override
     protected int execute(String[] parameters) throws IOException {
-        String passport;
-        String citizenship;
-        City from;
-        City to;
-        Passenger passenger;
+        if (parameters.length != 5) {
+            throw new IllegalArgumentException("required 5 parameters");
+        }
         Calendar flightDate = Calendar.getInstance();
-        List<Ticket> tickets;
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         try {
-            if (parameters == null || parameters.length < 1) {
-                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-                logger.info("From: ");
-                String buf = br.readLine().toLowerCase();
-                from = dao.findCityByName(buf);
-                logger.info("to: ");
-                buf = br.readLine().toLowerCase();
-                to = dao.findCityByName(buf);
-                logger.info("passport number:");
-                passport = br.readLine();
-                logger.info("citizenship:");
-                citizenship = br.readLine();
-                logger.info("FlightDate(yyyy-MM-dd):");
-
-                flightDate.setTime(df.parse(br.readLine()));
-
-            } else {
-                if (parameters.length != 5) {
-                    throw new IllegalArgumentException("required 5 parameters");
-                }
-                from = dao.findCityByName(parameters[0]);
-                to = dao.findCityByName(parameters[1]);
-
-                flightDate.setTime(df.parse(parameters[2]));
-
-                passport = parameters[3];
-                citizenship = parameters[4];
-            }
-            passenger = dao.findPassengerByPassportNumberAndCitizenship(passport, citizenship);
+            City from = dao.findCityByName(parameters[0]);
+            City to = dao.findCityByName(parameters[1]);
+            flightDate.setTime(df.parse(parameters[2]));
+            String passport = parameters[3];
+            String citizenship = parameters[4];
+            Passenger passenger = dao.findPassengerByPassportNumberAndCitizenship(passport, citizenship);
             if (passenger == null) {
                 throw new IllegalArgumentException("wrong passport number or citizenship or passenger haven't registered");
             }
@@ -83,21 +55,17 @@ public class BuyTicketToShortestRouteCommand extends AbstractCommand {
                 logger.warn("illegal cities");
                 return 1;
             }
-            tickets = buyTicket(passenger, from, to, flightDate);
+            List<Ticket> tickets = buyTicket(passenger, from, to, flightDate);
             if (tickets == null) {
                 logger.warn("Sorry, all tickets have been sold");
                 return 1;
             }
             logger.info("ticket bought");
             return 0;
-        } catch (ParseException e) {
-            logger.error(e);
-            return -1;
-        } catch (SQLException e) {
+        } catch (ParseException | SQLException e) {
             logger.error(e);
             return -1;
         }
-
     }
 
     public List<Ticket> buyTicket(Passenger passenger, City from, City to, Calendar flightDate) throws SQLException {
@@ -144,6 +112,6 @@ public class BuyTicketToShortestRouteCommand extends AbstractCommand {
 
     @Override
     public String getHelp() {
-        return null;
+        return "Usage: "+getName()+" DEP_CITY ARR_CITY DATE PASSPORT CITIZENSHIP";
     }
 }

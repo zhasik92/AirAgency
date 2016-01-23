@@ -31,11 +31,11 @@ public class ReturnTicketCommand extends AbstractCommand {
     @Override
     protected int execute(String[] parameters) throws IOException {
         logger.trace("return ticket execute() started");
-        if (parameters == null || parameters.length != 1) {
+        if (parameters.length != 1) {
             logger.error("illegal argument");
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("1 arg required");
         }
-        BigInteger ticketId = BigInteger.valueOf(Long.parseLong(parameters[0]));
+        BigInteger ticketId = new BigInteger(parameters[0]);
         try {
             return returnTicket(ticketId);
         } catch (SQLException sqle) {
@@ -63,6 +63,6 @@ public class ReturnTicketCommand extends AbstractCommand {
 
     @Override
     public String getHelp() {
-        return getName() + " id(long)";
+        return getName() + " id(BigInteger)";
     }
 }

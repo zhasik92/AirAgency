@@ -28,6 +28,7 @@ public class IdGenerator {
             } else {
                 idCounter = BigInteger.ZERO;
             }*/
+            //Locale.setDefault(Locale.US);
             Connection connection= JDBCPool.getConnection();
             ResultSet rs=null;
             try(Statement st=connection.createStatement()){
@@ -40,7 +41,6 @@ public class IdGenerator {
                 rs.close();
             }catch (SQLException e){
                 e.printStackTrace();
-
             }finally {
                 JDBCPool.releaseConnection(connection);
 

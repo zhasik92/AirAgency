@@ -2,48 +2,42 @@ package com.netcracker.edu.dao;
 
 import com.netcracker.edu.bobjects.*;
 
+import java.math.BigInteger;
 import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.Collection;
 
 /**
  * Created by Zhassulan on 29.12.2015.
  */
 // TODO: 05.01.2016 complete this and use
-public  class GenericDAO<T extends BusinessObject> {
-    private DAObject dao;
+public  interface GenericDAO<T extends BusinessObject> {
+    DAObject dao=DAOFactory.getDAObject();
 
-    public GenericDAO(DAObject dao) {
-        this.dao = dao;
-    }
+    void addBO(T bo) throws SQLException;
 
-    public void save(T obj) throws SQLException,IllegalArgumentException {
-        if (obj == null) {
-            throw new IllegalArgumentException("obj can't be null");
-        }
-        if (obj.getClass().equals(Airplane.class)) {
-            dao.addAirplane((Airplane) obj);
-            return;
-        }
-        if (obj.getClass().equals(City.class)) {
-            dao.addCity((City) obj);
-            return;
-        }
-        if (obj.getClass().equals(Flight.class)) {
-            dao.addFlight((Flight) obj);
-            return;
-        }
-        if (obj.getClass().equals(Passenger.class)) {
-            dao.addPassenger((Passenger) obj);
-            return;
-        }
-        if (obj.getClass().equals(Ticket.class)) {
-            dao.addTicket((Ticket) obj);
-            return;
-        }
-        if (obj.getClass().equals(User.class)) {
-            dao.addUser((User) obj);
-            return;
-        }
-        throw new IllegalArgumentException("illegal class of the object");
-    }
+    void addAllTickets(Collection<Ticket> tickets) throws SQLException;
 
+    Collection<T> getAllBOs(Class<T> t) throws SQLException;
+
+    // TODO: 05.01.2016 remove it?
+    Collection<Ticket> getAllCanceledTicketsInFlight(BigInteger flightId, Calendar flightDate) throws SQLException;
+
+    int getNumberOfSoldTicketsInFlight(BigInteger flightId, Calendar flightDate) throws SQLException;
+
+    Airplane findAirplaneByName(String airplane) throws SQLException;
+
+    City findCityByName(String city) throws SQLException;
+
+    Flight findFlightById(BigInteger id) throws SQLException;
+
+    Passenger findPassengerById(BigInteger id) throws SQLException;
+
+    Passenger findPassengerByPassportNumberAndCitizenship(String passportNumber, String citizenship) throws SQLException;
+
+    Ticket findTicketById(BigInteger id) throws SQLException;
+
+    User findUserByLogin(String login) throws SQLException;
+
+    void updateBO(T bo) throws SQLException;
 }

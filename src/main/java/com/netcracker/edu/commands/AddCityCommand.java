@@ -7,9 +7,7 @@ import com.netcracker.edu.dao.DAObject;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.SQLException;
 
 /**
@@ -31,26 +29,21 @@ public class AddCityCommand extends AbstractCommand {
 
     @Override
     protected int execute(String[] parameters) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        City city;
-        String cityName;
-        if (parameters != null && !parameters[0].isEmpty() && parameters.length == 1) {
-            cityName = parameters[0];
-        } else {
-            logger.info("Enter name of City:");
-            cityName = br.readLine();
+        if (parameters.length != 1 || parameters[0].isEmpty()) {
+            throw new IllegalArgumentException("City name is required");
         }
-        try{
-        city = dao.findCityByName(cityName);
-        if (city != null) {
-            logger.info("City already exist");
-            return 1;
-        }
+        try {
+            City city = dao.findCityByName(parameters[0]);
+            if (city != null) {
+                logger.info("City already exist");
+                return 1;
+            }
 
-        city = new City(cityName);
-        dao.addCity(city);
-        logger.trace("city added");
-        return 0;}catch (SQLException sqle){
+            city = new City(parameters[0]);
+            dao.addCity(city);
+            logger.info("city added");
+            return 0;
+        } catch (SQLException sqle) {
             logger.error(sqle);
             return -1;
         }
@@ -58,6 +51,6 @@ public class AddCityCommand extends AbstractCommand {
 
     @Override
     public String getHelp() {
-        return "AddCityCommand usage: " + "\"" + getName() + "\"" + "or " + "\"" + getName() + "CityName" + "\"";
+        return "AddCityCommand usage: " + "\"" + getName() + "\"";
     }
 }

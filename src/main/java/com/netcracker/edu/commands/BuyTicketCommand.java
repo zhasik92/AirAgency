@@ -8,9 +8,7 @@ import com.netcracker.edu.util.IdGenerator;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -38,43 +36,19 @@ public class BuyTicketCommand extends AbstractCommand {
 
     @Override
     protected int execute(String[] parameters) throws IOException {
-        String passport;
-        String citizenship;
-        City from;
-        City to;
-        Calendar flightDate;
-        Passenger passenger;
-        LinkedList<Ticket> tickets;
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        if (parameters.length != 5) {
+            throw new IllegalArgumentException("required 5 parameters");
+        }
         try {
-            if (parameters == null || parameters.length < 1) {
-                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-                logger.info("From: ");
-                String buf = br.readLine().toLowerCase();
-                from = dao.findCityByName(buf);
-                logger.info("to: ");
-                buf = br.readLine().toLowerCase();
-                to = dao.findCityByName(buf);
-                logger.info("Flight date(yyyy-MM-dd):");
-                buf = br.readLine();
-                flightDate = Calendar.getInstance();
-                flightDate.setTime(df.parse(buf));
-                logger.info("passport number:");
-                passport = br.readLine();
-                logger.info("citizenship:");
-                citizenship = br.readLine();
-            } else {
-                if (parameters.length != 5) {
-                    throw new IllegalArgumentException("required 5 parameters");
-                }
-                from = dao.findCityByName(parameters[0]);
-                to = dao.findCityByName(parameters[1]);
-                flightDate = Calendar.getInstance();
-                flightDate.setTime(df.parse(parameters[2]));
-                passport = parameters[3];
-                citizenship = parameters[4];
-            }
-            passenger = dao.findPassengerByPassportNumberAndCitizenship(passport, citizenship);
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            City from = dao.findCityByName(parameters[0]);
+            City to = dao.findCityByName(parameters[1]);
+            Calendar flightDate = Calendar.getInstance();
+            flightDate.setTime(df.parse(parameters[2]));
+            String passport = parameters[3];
+            String citizenship = parameters[4];
+
+            Passenger passenger = dao.findPassengerByPassportNumberAndCitizenship(passport, citizenship);
             if (passenger == null) {
                 throw new IllegalArgumentException("wrong passport number or citizenship or passenger haven't registered");
             }
@@ -82,7 +56,7 @@ public class BuyTicketCommand extends AbstractCommand {
                 logger.warn("illegal cities");
                 return 1;
             }
-            tickets = buyTicket(passenger, from, to, flightDate);
+            LinkedList<Ticket> tickets = buyTicket(passenger, from, to, flightDate);
             if (tickets == null) {
                 logger.warn("Sorry, can't buy tickets");
                 return 1;
@@ -92,11 +66,9 @@ public class BuyTicketCommand extends AbstractCommand {
                 logger.info(it.toString());
             }
             return 0;
-        } catch (ParseException e) {
-            logger.error("illegal flightDate format");
+        } catch (ParseException|SQLException e) {
+            logger.error(e);
             return 1;
-        }catch (SQLException sqle){
-            return -1;
         }
     }
 
@@ -132,14 +104,14 @@ public class BuyTicketCommand extends AbstractCommand {
             }
             int i = 0;
             for (Flight it : path) {
-                Ticket ticket = new Ticket(IdGenerator.getInstance().getId(), passenger.getId(), it.getId(), flightDates.get(i++),Calendar.getInstance());
+                Ticket ticket = new Ticket(IdGenerator.getInstance().getId(), passenger.getId(), it.getId(), flightDates.get(i++), Calendar.getInstance());
                 logger.trace("Ticket created,  id = " + ticket.getId());
                 currentTickets.add(ticket);
                 SecurityContextHolder.getLoggedHolder().addTicket(ticket.getId());
             }
             dao.addAllTickets(currentTickets);
             logger.trace("ticket saved");
-       }
+        }
         return currentTickets;
     }
 

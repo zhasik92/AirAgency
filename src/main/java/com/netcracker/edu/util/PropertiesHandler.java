@@ -13,16 +13,20 @@ import java.util.Properties;
 public class PropertiesHandler {
     private static final Logger logger = LogManager.getLogger(PropertiesHandler.class);
     private static final Properties properties = new Properties();
-    private static final String DBURL;
-    private static final String DAO;
-    private static final String DATABASE_LOGIN;
-    private static final char[] DATABASE_PASSWORD;
-    private static final int JDBC_POOL_SIZE;
+    private static  String DBURL;
+    private static  String DAO;
+    private static  String DATABASE_LOGIN;
+    private static  char[] DATABASE_PASSWORD;
+    private static  int JDBC_POOL_SIZE;
+    private static String propertyPath="src/main/resources/config.properties";
+    private PropertiesHandler() {
 
-    static {
+    }
+
+  public static void init() {
         try {
             // TODO: 08.01.2016 where to store configs in production?
-            FileInputStream fis = new FileInputStream("src/main/resources/config.properties");
+            FileInputStream fis = new FileInputStream(propertyPath);
             properties.load(fis);
         } catch (IOException e) {
             logger.error(e);
@@ -36,6 +40,9 @@ public class PropertiesHandler {
         properties.values().forEach(logger::trace);
     }
 
+    public static void setPropertyFile(String path){
+        propertyPath=path;
+    }
     public static String getDAO() {
         return DAO;
     }

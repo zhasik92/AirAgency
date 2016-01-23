@@ -1,6 +1,5 @@
 package com.netcracker.edu.commands;
 
-import com.netcracker.edu.commands.JustForTestingCommand.ReturnLastBoughtTicket;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -10,12 +9,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *  Created by Zhassulan on 23.10.2015.
+ * Created by Zhassulan on 23.10.2015.
  */
 public final class CommandsEngine {
     private static final Logger logger = LogManager.getLogger(CommandsEngine.class);
-    private static CommandsEngine instance;
     private Map<String, AbstractCommand> mapWithCommands;
+    private static CommandsEngine instance = new CommandsEngine();
 
     private CommandsEngine() {
         {
@@ -33,7 +32,6 @@ public final class CommandsEngine {
             listOfCommands.add(new ReturnTicketCommand());
             listOfCommands.add(new SignInCommand());
             listOfCommands.add(new ViewCommand());
-            listOfCommands.add(new ReturnLastBoughtTicket());
             listOfCommands.add(new QuitCommand());
             listOfCommands.add(new ActualizeGraphCommand());
 
@@ -45,18 +43,15 @@ public final class CommandsEngine {
         }
     }
 
-    // TODO: 04.01.2016 check singleton
-    public synchronized static CommandsEngine getInstance() {
-        if (instance == null) {
-            instance = new CommandsEngine();
-        }
+    public static CommandsEngine getInstance() {
         return instance;
     }
 
     public AbstractCommand getCommand(String commandName) {
         return mapWithCommands.get(commandName);
     }
-    public void getHelp(){
-        mapWithCommands.forEach((k,v)->logger.info(v.getHelp()));
+
+    public void getHelp() {
+        mapWithCommands.forEach((k, v) -> logger.info(v.getHelp()));
     }
 }

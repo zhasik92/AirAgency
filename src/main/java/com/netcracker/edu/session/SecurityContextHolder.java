@@ -3,7 +3,7 @@ package com.netcracker.edu.session;
 import com.netcracker.edu.bobjects.User;
 
 import java.io.IOException;
-import java.nio.file.AccessDeniedException;
+import java.security.AccessControlException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.locks.Lock;
@@ -28,7 +28,7 @@ public class SecurityContextHolder {
             readLock.lock();
             try {
                 if (activeUsers.contains(user)) {
-                    throw new AccessDeniedException("User already signed in");
+                    throw new AccessControlException("User already signed in");
                 }
             } finally {
                 readLock.unlock();

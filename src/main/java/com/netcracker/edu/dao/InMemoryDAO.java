@@ -2,11 +2,11 @@ package com.netcracker.edu.dao;
 
 import com.netcracker.edu.bobjects.*;
 import com.netcracker.edu.persist.InMemoryStorage;
+import com.netcracker.edu.util.IdGenerator;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.Calendar;
@@ -19,6 +19,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * Created by Zhassulan on 23.10.2015.
  */
 public class InMemoryDAO implements DAObject {
+    private static Logger logger= LogManager.getLogger(InMemoryDAO.class);
     private static InMemoryDAO instance;
     private static InMemoryStorage storage;
 
@@ -427,5 +428,30 @@ public class InMemoryDAO implements DAObject {
     @Override
     public void updateUser(User user) throws SQLException {
 
+    }
+
+    public int persist() throws IOException{
+        InMemoryStorage storage = InMemoryDAO.getInstance().getStorage();
+        FileOutputStream fos = new FileOutputStream("InMemoryStorage.out");
+        logger.trace("FOS created(InMemoryStorage.out)");
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        logger.trace("OOS created");
+        oos.writeObject(storage);
+        oos.flush();
+        logger.trace("storage wrote to file");
+        oos.close();
+        logger.trace("FOS closed");
+
+        BigInteger id = IdGenerator.getInstance().getId();
+        fos = new FileOutputStream("idGen.out");
+        oos = new ObjectOutputStream(fos);
+        logger.trace("OOS created (idGen.out)");
+        oos.writeObject(id);
+        oos.flush();
+        logger.trace("idGen wrote to file");
+        oos.close();
+        logger.trace("exit");
+        System.exit(0);
+        return 0;
     }
 }

@@ -8,9 +8,7 @@ import com.netcracker.edu.util.IdGenerator;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.sql.Time;
 
@@ -33,37 +31,16 @@ public class AddFlightCommand extends AbstractCommand {
 
     @Override
     protected int execute(String[] parameters) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String from;
-        String to;
-        Time departureTime;
-        Time arrivalTime;
-        String airplane;
-        double price;
-        if (parameters == null || parameters.length == 0) {
-            logger.info("From:");
-            from = br.readLine();
-            logger.info("to:");
-            to = br.readLine();
-            logger.info("Departure time(hh:mm:ss):");
-            departureTime = Time.valueOf(br.readLine());
-            logger.info("Arrival time(hh:mm:ss):");
-            arrivalTime = Time.valueOf(br.readLine());
-            logger.info("Write Airplane type:");
-            airplane = br.readLine();
-            logger.info("Set price:");
-            price = Double.parseDouble(br.readLine());
-        } else {
-            if (parameters.length != 6) {
-                throw new IllegalArgumentException("required 6 args");
-            }
-            from = parameters[0];
-            to = parameters[1];
-            departureTime = Time.valueOf(parameters[2]);
-            arrivalTime = Time.valueOf(parameters[3]);
-            airplane = parameters[4];
-            price = Double.parseDouble(parameters[5]);
+        if (parameters.length != 6) {
+            throw new IllegalArgumentException("required 6 args");
         }
+        String from = parameters[0];
+        String to = parameters[1];
+        Time departureTime = Time.valueOf(parameters[2]);
+        Time arrivalTime = Time.valueOf(parameters[3]);
+        String airplane = parameters[4];
+        double price = Double.parseDouble(parameters[5]);
+
         try {
             if (dao.findCityByName(from) == null) {
                 logger.warn("city is not found");
@@ -80,16 +57,17 @@ public class AddFlightCommand extends AbstractCommand {
 
             Flight flight = new Flight(IdGenerator.getInstance().getId(), from, to, departureTime, arrivalTime, airplane, price);
             dao.addFlight(flight);
-            logger.trace("flight added, id = " + flight.getId().toString());
+            logger.info("flight added, id = " + flight.getId().toString());
             return 0;
         } catch (SQLException sqle) {
             logger.error(sqle);
             return -1;
         }
+
     }
 
     @Override
     public String getHelp() {
-        return "AddFlightCommand usage: " + getName();
+        return "AddFlightCommand usage: " + getName() + " DEP_CITY ARR_CITY DEP_TIME ARR_TIME AIRPLANE PRICE";
     }
 }

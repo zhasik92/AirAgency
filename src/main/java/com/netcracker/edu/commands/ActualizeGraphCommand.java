@@ -32,6 +32,6 @@ public class ActualizeGraphCommand extends AbstractCommand {
 
     @Override
     public String getHelp() {
-        return "updates cities and flights in searching graph";
+        return "Usage: "+getName();
     }
 }

@@ -6,9 +6,7 @@ import com.netcracker.edu.dao.DAObject;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.SQLException;
 
 /**
@@ -35,28 +33,17 @@ public class RegisterCommand extends AbstractCommand {
 
     @Override
     protected int execute(String[] parameters) throws IOException {
-        String login;
-        char[] password;
-        if (parameters == null || parameters.length < 1) {
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            logger.info("Enter login: ");
-            login = br.readLine();
-            logger.info("enter password: ");
-            password = br.readLine().toCharArray();
-        } else {
-            if (parameters.length != 2) {
-                throw new IllegalArgumentException("required 2 parameters");
-            }
-            login = parameters[0];
-            password = parameters[1].toCharArray();
+        if (parameters.length != 2) {
+            throw new IllegalArgumentException("required 2 parameters");
         }
+        String login = parameters[0];
+        char[] password = parameters[1].toCharArray();
         try {
             User user = dao.findUserByLogin(login);
             if (user != null) {
                 logger.warn("login already registered");
                 return 1;
             }
-
             user = createUser(login, password);
             dao.addUser(user);
             logger.info("successfully registered");

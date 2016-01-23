@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Locale;
 import java.util.concurrent.ArrayBlockingQueue;
 
 import static com.netcracker.edu.util.PropertiesHandler.*;
@@ -21,7 +22,9 @@ public class JDBCPool {
 
     private JDBCPool() {
         try {
+            Locale.setDefault(Locale.US);
             Class.forName("oracle.jdbc.driver.OracleDriver");
+            init();
             for (int i = 0; i < CONNECTIONS.remainingCapacity(); i++) {
                 Connection connection = new UnclosableConnection(DriverManager.getConnection(getDBURL(), getDatabaseLogin(), String.valueOf(getDatabasePassword())));
                 CONNECTIONS.add(connection);
@@ -35,7 +38,7 @@ public class JDBCPool {
         }
     }
 
-    /* public static JDBCPool getInstance(){
+     /*public static JDBCPool getInstance(){
          return INSTANCE;
      }*/
     public static Connection getConnection() {
