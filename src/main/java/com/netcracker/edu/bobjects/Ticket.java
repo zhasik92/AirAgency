@@ -1,7 +1,11 @@
 package com.netcracker.edu.bobjects;
 
+import org.apache.commons.lang.time.FastDateFormat;
+
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
@@ -70,5 +74,20 @@ public class Ticket extends HasIdObject implements Serializable {
 
     public Calendar getFlightDate() {
         return flightDate;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder result=new StringBuilder();
+        String newline=System.getProperty("line.separator");
+        DateFormat df= new SimpleDateFormat("yyyy-MM-dd");
+        result.append(this.getClass().getSimpleName()).append(newline);
+        result.append("id: ").append(getId()).append(newline);
+        result.append("passenger: ").append(getPassengerId()).append(newline);
+        result.append("flight: ").append(getFlightId()).append(newline);
+        result.append("status: ").append(isCanceled()).append(newline);
+        result.append("flightDate: ").append(df.format(getFlightDate().getTime())).append(newline);
+        result.append("ticketBoughtDate: ").append(df.format(getTicketBoughtDate().getTime())).append(newline);
+        return result.toString();
     }
 }

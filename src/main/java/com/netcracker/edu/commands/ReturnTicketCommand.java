@@ -4,6 +4,7 @@ import com.netcracker.edu.bobjects.Ticket;
 import com.netcracker.edu.bobjects.User;
 import com.netcracker.edu.dao.DAOFactory;
 import com.netcracker.edu.dao.DAObject;
+import com.netcracker.edu.util.ResultHandler;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -29,7 +30,7 @@ public class ReturnTicketCommand extends AbstractCommand {
     }
 
     @Override
-    protected int execute(String[] parameters) throws IOException {
+    protected int execute(String[] parameters, ResultHandler resultHandler) throws IOException {
         logger.trace("return ticket execute() started");
         if (parameters.length != 1) {
             logger.error("illegal argument");
@@ -38,8 +39,8 @@ public class ReturnTicketCommand extends AbstractCommand {
         BigInteger ticketId = new BigInteger(parameters[0]);
         try {
             return returnTicket(ticketId);
-        } catch (SQLException sqle) {
-            logger.error(sqle);
+        } catch (SQLException e) {
+            logger.error(e);
             return -1;
         }
     }

@@ -4,7 +4,9 @@ import com.netcracker.edu.bobjects.*;
 import com.netcracker.edu.dao.DAOFactory;
 import com.netcracker.edu.dao.DAObject;
 import com.netcracker.edu.session.SecurityContextHolder;
+import com.netcracker.edu.util.CommandsUtils;
 import com.netcracker.edu.util.IdGenerator;
+import com.netcracker.edu.util.ResultHandler;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -23,7 +25,7 @@ import java.util.List;
  */
 public class BuyTicketToShortestRouteCommand extends AbstractCommand {
     private static final Logger logger = LogManager.getLogger(FindRoutesCommand.class);
-    private static DAObject dao = DAOFactory.getDAObject();
+    private static final DAObject dao = DAOFactory.getDAObject();
 
     public BuyTicketToShortestRouteCommand() {
         super(User.Roles.USER);
@@ -35,7 +37,7 @@ public class BuyTicketToShortestRouteCommand extends AbstractCommand {
     }
 
     @Override
-    protected int execute(String[] parameters) throws IOException {
+    protected int execute(String[] parameters, ResultHandler resultHandler) throws IOException {
         if (parameters.length != 5) {
             throw new IllegalArgumentException("required 5 parameters");
         }
@@ -55,12 +57,14 @@ public class BuyTicketToShortestRouteCommand extends AbstractCommand {
                 logger.warn("illegal cities");
                 return 1;
             }
-            List<Ticket> tickets = buyTicket(passenger, from, to, flightDate);
+            List<Ticket> tickets = buyTicket(passenger, from, to, flightDate, resultHandler);
             if (tickets == null) {
                 logger.warn("Sorry, all tickets have been sold");
                 return 1;
             }
-            logger.info("ticket bought");
+            for (Ticket it : tickets) {
+                logger.info(it.toString());
+            }
             return 0;
         } catch (ParseException | SQLException e) {
             logger.error(e);
@@ -68,7 +72,7 @@ public class BuyTicketToShortestRouteCommand extends AbstractCommand {
         }
     }
 
-    public List<Ticket> buyTicket(Passenger passenger, City from, City to, Calendar flightDate) throws SQLException {
+    public List<Ticket> buyTicket(Passenger passenger, City from, City to, Calendar flightDate, ResultHandler resultHandler) throws SQLException {
         if (passenger == null || from == null || to == null || flightDate == null) {
             throw new IllegalArgumentException();
         }
@@ -78,9 +82,9 @@ public class BuyTicketToShortestRouteCommand extends AbstractCommand {
         List<Calendar> flightDates = new LinkedList<>();
         Calendar currentDate = (Calendar) flightDate.clone();
         Flight temp = path.get(0);
-        synchronized (this) {
+        synchronized (dao) {
             for (Flight it : path) {
-                if (temp.getArrivalTime().compareTo(it.getDepartureTime()) > 0) {
+                if (CommandsUtils.compareTime(temp.getArrivalTime(),it.getDepartureTime())>0) {
                     flightDate.add(Calendar.DATE, 1);
                     currentDate = (Calendar) flightDate.clone();
                 }
@@ -105,13 +109,14 @@ public class BuyTicketToShortestRouteCommand extends AbstractCommand {
             }
             dao.addAllTickets(currentTickets);
             logger.trace("tickets saved");
-            return currentTickets;
         }
+        currentTickets.forEach(resultHandler::addObject);
+        return currentTickets;
 
     }
 
     @Override
     public String getHelp() {
-        return "Usage: "+getName()+" DEP_CITY ARR_CITY DATE PASSPORT CITIZENSHIP";
+        return "Usage: " + getName() + " DEP_CITY ARR_CITY DATE PASSPORT CITIZENSHIP";
     }
 }

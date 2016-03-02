@@ -1,6 +1,8 @@
 package com.netcracker.edu.commands;
 
 import com.netcracker.edu.bobjects.User;
+import com.netcracker.edu.util.ResultHandler;
+import com.sun.istack.internal.Nullable;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -21,14 +23,15 @@ public class ActualizeGraphCommand extends AbstractCommand {
     }
 
     @Override
-    protected int execute(String[] parameters) throws IOException {
+    protected int execute(String[] parameters, ResultHandler resultHandler) throws IOException {
         FindRoutesCommand findRoutesCommand=(FindRoutesCommand) CommandsEngine.getInstance().getCommand("find_routes");
         findRoutesCommand.actualizeGraph();
-        FindShortestRoutesCommand findShortestRoutesCommand=(FindShortestRoutesCommand)CommandsEngine.getInstance().getCommand("find_shortest_route");
+        FindShortestRoutesCommand findShortestRoutesCommand=(FindShortestRoutesCommand)CommandsEngine.getInstance().getCommand("find_short_route");
         findShortestRoutesCommand.actualizeGraph();
         logger.info("actualize command executed");
         return 0;
     }
+
 
     @Override
     public String getHelp() {

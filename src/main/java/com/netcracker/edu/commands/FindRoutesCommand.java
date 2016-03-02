@@ -5,6 +5,7 @@ import com.netcracker.edu.bobjects.Flight;
 import com.netcracker.edu.bobjects.User;
 import com.netcracker.edu.dao.DAOFactory;
 import com.netcracker.edu.dao.DAObject;
+import com.netcracker.edu.util.ResultHandler;
 import com.netcracker.edu.util.cheapestpathalgo.DijkstraAlgorithm;
 import com.netcracker.edu.util.cheapestpathalgo.Edge;
 import com.netcracker.edu.util.cheapestpathalgo.Graph;
@@ -37,13 +38,14 @@ public class FindRoutesCommand extends AbstractCommand {
     }
 
     @Override
-    protected int execute(String[] parameters) throws IOException {
+    protected int execute(String[] parameters, ResultHandler resultHandler) throws IOException {
         if (parameters == null || parameters.length != 2) {
             logger.error("illegal arguments");
             throw new IllegalArgumentException("required 2 arguments");
         }
         try {
             LinkedList<Flight> path = getPath(parameters[0].toLowerCase(), parameters[1].toLowerCase());
+            path.forEach(resultHandler::addObject);
             path.forEach(logger::info);
             return 0;
         } catch (SQLException sqle) {

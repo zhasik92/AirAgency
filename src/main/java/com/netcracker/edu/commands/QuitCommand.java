@@ -3,6 +3,7 @@ package com.netcracker.edu.commands;
 import com.netcracker.edu.bobjects.User;
 import com.netcracker.edu.dao.DAOFactory;
 import com.netcracker.edu.session.SecurityContextHolder;
+import com.netcracker.edu.util.ResultHandler;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -25,22 +26,22 @@ public class QuitCommand extends AbstractCommand {
     }
 
     @Override
-    public int execute(String[] parameters, User user) throws IOException {
+    public int execute(String[] parameters, User user, ResultHandler resultHandler) throws IOException {
         if (user == null) {
             throw new IllegalArgumentException("User can't be null, sign in first");
         }
         try {
             DAOFactory.getDAObject().updateUser(user);
-        } catch (SQLException sqle) {
-            logger.error(sqle.getMessage(), sqle);
+        } catch (SQLException e) {
+            logger.error(e);
         }
-        execute(parameters);
+        execute(parameters,resultHandler);
         Thread.currentThread().interrupt();
         return 0;
     }
 
     @Override
-    protected int execute(String[] parameters) throws IOException {
+    protected int execute(String[] parameters,ResultHandler resultHandler) throws IOException {
         SecurityContextHolder.removeUserFromSignedUsers();
         SecurityContextHolder.setLoggedUser(null);
         return 0;

@@ -4,6 +4,7 @@ import com.netcracker.edu.bobjects.City;
 import com.netcracker.edu.bobjects.User;
 import com.netcracker.edu.dao.DAOFactory;
 import com.netcracker.edu.dao.DAObject;
+import com.netcracker.edu.util.ResultHandler;
 import com.netcracker.edu.util.shortestpathalgo.DijkstraAlgorithm2;
 import com.netcracker.edu.util.shortestpathalgo.Flight;
 import com.netcracker.edu.util.shortestpathalgo.TimeTable;
@@ -43,21 +44,22 @@ public class FindShortestRoutesCommand extends AbstractCommand {
     }
 
     @Override
-    protected int execute(String[] parameters) throws IOException {
+    protected int execute(String[] parameters, ResultHandler resultHandler) throws IOException {
         if (parameters == null || parameters.length != 3) {
             logger.error("illegal arguments");
             throw new IllegalArgumentException("required 3 arguments");
         }
         try {
             List<com.netcracker.edu.bobjects.Flight> path = getPath(parameters[0], parameters[1], parameters[2]);
+            path.forEach(resultHandler::addObject);
             for (com.netcracker.edu.bobjects.Flight it : path) {
                 logger.info(it.getId() + " " + it.getDepartureAirportName()
                         + " " + it.getArrivalAirportName() + " " + it.getDepartureTime() +
                         " " + it.getArrivalTime() + ", price =" + it.getPrice());
             }
             return 0;
-        } catch (SQLException sqle) {
-            logger.error(sqle);
+        } catch (SQLException e) {
+            logger.error(e);
             return -1;
         }
     }

@@ -2,6 +2,7 @@ package com.netcracker.edu.commands;
 
 import com.netcracker.edu.bobjects.User;
 import com.netcracker.edu.server.Server;
+import com.netcracker.edu.util.ResultHandler;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -24,7 +25,7 @@ public class ExitCommand extends AbstractCommand {
     }
 
     @Override
-    protected synchronized int execute(String[] parameters) throws IOException {
+    protected synchronized int execute(String[] parameters, ResultHandler resultHandler) throws IOException {
         Server.isStopped=true;
         return 0;
     }

@@ -1,14 +1,18 @@
 package com.netcracker.edu.commands;
 
 
+import com.netcracker.edu.bobjects.Ticket;
 import com.netcracker.edu.bobjects.User;
 import com.netcracker.edu.dao.DAOFactory;
 import com.netcracker.edu.dao.DAObject;
 import com.netcracker.edu.session.SecurityContextHolder;
+import com.netcracker.edu.util.ResultHandler;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.math.BigInteger;
+import java.sql.SQLException;
 
 
 /**
@@ -30,7 +34,7 @@ public class ViewCommand extends AbstractCommand {
     }
 
     @Override
-    protected int execute(String[] parameters) throws IOException {
+    protected int execute(String[] parameters, ResultHandler resultHandler) throws IOException {
         logger.trace("ViewCommand.execute() called");
         //try {
             /*switch (parameters[0].toLowerCase()) {
@@ -62,6 +66,12 @@ public class ViewCommand extends AbstractCommand {
             logger.error(sqle);
             return -1;
         }*/
+        try{
+        for(BigInteger it: SecurityContextHolder.getLoggedHolder().getTickets()){
+            resultHandler.addObject( dao.findTicketById(it));
+        }}catch (SQLException e){
+            logger.error(e);
+        }
         SecurityContextHolder.getLoggedHolder().getTickets().forEach(logger::info);
         return 0;
     }

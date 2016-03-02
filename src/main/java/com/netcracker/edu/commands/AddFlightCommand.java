@@ -5,6 +5,7 @@ import com.netcracker.edu.bobjects.User;
 import com.netcracker.edu.dao.DAOFactory;
 import com.netcracker.edu.dao.DAObject;
 import com.netcracker.edu.util.IdGenerator;
+import com.netcracker.edu.util.ResultHandler;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -30,7 +31,7 @@ public class AddFlightCommand extends AbstractCommand {
     }
 
     @Override
-    protected int execute(String[] parameters) throws IOException {
+    protected int execute(String[] parameters,ResultHandler resultHandler) throws IOException {
         if (parameters.length != 6) {
             throw new IllegalArgumentException("required 6 args");
         }

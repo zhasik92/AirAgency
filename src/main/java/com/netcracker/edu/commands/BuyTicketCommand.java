@@ -4,7 +4,11 @@ import com.netcracker.edu.bobjects.*;
 import com.netcracker.edu.dao.DAOFactory;
 import com.netcracker.edu.dao.DAObject;
 import com.netcracker.edu.session.SecurityContextHolder;
+import com.netcracker.edu.util.CommandsUtils;
 import com.netcracker.edu.util.IdGenerator;
+import com.netcracker.edu.util.ResultHandler;
+import org.apache.commons.lang.time.DateUtils;
+import org.apache.commons.lang.time.FastDateFormat;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -13,9 +17,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Command
@@ -23,7 +25,7 @@ import java.util.List;
  */
 public class BuyTicketCommand extends AbstractCommand {
     private static final Logger logger = LogManager.getLogger(BuyTicketCommand.class);
-    private static DAObject dao = DAOFactory.getDAObject();
+    private static final DAObject dao = DAOFactory.getDAObject();
 
     public BuyTicketCommand() {
         super(User.Roles.USER);
@@ -35,7 +37,7 @@ public class BuyTicketCommand extends AbstractCommand {
     }
 
     @Override
-    protected int execute(String[] parameters) throws IOException {
+    protected int execute(String[] parameters, ResultHandler resultHandler) throws IOException {
         if (parameters.length != 5) {
             throw new IllegalArgumentException("required 5 parameters");
         }
@@ -56,7 +58,7 @@ public class BuyTicketCommand extends AbstractCommand {
                 logger.warn("illegal cities");
                 return 1;
             }
-            LinkedList<Ticket> tickets = buyTicket(passenger, from, to, flightDate);
+            LinkedList<Ticket> tickets = buyTicket(passenger, from, to, flightDate, resultHandler);
             if (tickets == null) {
                 logger.warn("Sorry, can't buy tickets");
                 return 1;
@@ -66,27 +68,26 @@ public class BuyTicketCommand extends AbstractCommand {
                 logger.info(it.toString());
             }
             return 0;
-        } catch (ParseException|SQLException e) {
+        } catch (ParseException | SQLException e) {
             logger.error(e);
             return 1;
         }
     }
 
     //return LinkedList with bought tickets or null if no tickets available
-    public LinkedList<Ticket> buyTicket(Passenger passenger, City from, City to, Calendar flightDate) throws SQLException {
+    public LinkedList<Ticket> buyTicket(Passenger passenger, City from, City to, Calendar flightDate, ResultHandler resultHandler) throws SQLException {
         if (passenger == null || from == null || to == null) {
             throw new IllegalArgumentException();
         }
         FindRoutesCommand findRoutesCommand = (FindRoutesCommand) CommandsEngine.getInstance().getCommand("find_routes");
         LinkedList<Flight> path = findRoutesCommand.getPath(from.getName(), to.getName());
         LinkedList<Ticket> currentTickets = new LinkedList<>();
-        List<Calendar> flightDates = new LinkedList<>();
+        LinkedList<Calendar> flightDates = new LinkedList<>();
         Calendar currentDate = (Calendar) flightDate.clone();
         Flight temp = path.getFirst();
-        synchronized (this) {
-
+        synchronized (dao) {
             for (Flight it : path) {
-                if (temp.getArrivalTime().compareTo(it.getDepartureTime()) > 0) {
+                if(CommandsUtils.compareTime(temp.getArrivalTime(),it.getDepartureTime())>0){
                     flightDate.add(Calendar.DATE, 1);
                     currentDate = (Calendar) flightDate.clone();
                 }
@@ -110,8 +111,9 @@ public class BuyTicketCommand extends AbstractCommand {
                 SecurityContextHolder.getLoggedHolder().addTicket(ticket.getId());
             }
             dao.addAllTickets(currentTickets);
-            logger.trace("ticket saved");
+            logger.trace("tickets saved");
         }
+        currentTickets.forEach(resultHandler::addObject);
         return currentTickets;
     }
 

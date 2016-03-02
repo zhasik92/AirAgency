@@ -4,6 +4,7 @@ import com.netcracker.edu.bobjects.Airplane;
 import com.netcracker.edu.bobjects.User;
 import com.netcracker.edu.dao.DAOFactory;
 import com.netcracker.edu.dao.DAObject;
+import com.netcracker.edu.util.ResultHandler;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -29,7 +30,7 @@ public class AddAirplaneCommand extends AbstractCommand {
     }
 
     @Override
-    protected int execute(String[] parameters) throws IOException {
+    protected int execute(String[] parameters,ResultHandler resultHandler) throws IOException {
         if (parameters.length != 2) {
             logger.error("illegal arguments");
             throw new IllegalArgumentException();

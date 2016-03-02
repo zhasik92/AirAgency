@@ -3,6 +3,7 @@ package com.netcracker.edu.commands;
 import com.netcracker.edu.bobjects.User;
 import com.netcracker.edu.dao.DAOFactory;
 import com.netcracker.edu.dao.DAObject;
+import com.netcracker.edu.util.ResultHandler;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -27,12 +28,12 @@ public class RegisterCommand extends AbstractCommand {
     }
 
     @Override
-    public int execute(String[] parameters, User user) throws IOException {
-        return execute(parameters);
+    public int execute(String[] parameters, User user, ResultHandler result) throws IOException {
+        return execute(parameters,result);
     }
 
     @Override
-    protected int execute(String[] parameters) throws IOException {
+    protected int execute(String[] parameters,ResultHandler resultHandler) throws IOException {
         if (parameters.length != 2) {
             throw new IllegalArgumentException("required 2 parameters");
         }
@@ -60,6 +61,6 @@ public class RegisterCommand extends AbstractCommand {
 
     @Override
     public String getHelp() {
-        return "\"" + getName() + "\"" + " or " + "\"" + getName() + " login password\"";
+        return getName() + " login password";
     }
 }

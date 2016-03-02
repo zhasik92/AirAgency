@@ -22,11 +22,11 @@ public class Main {
                     break;
                 case "test":
                     logger.info("test mode started");
-                    CommandsReader.readCommandsFromTestFileAndExecute();
+                    CommandsUtils.readCommandsFromTestFileAndExecute();
                     break;
                 case "console":
                     logger.info("Console mode started");
-                    CommandsReader.readCommandsFromConsoleAndExecute();
+                    CommandsUtils.readCommandsFromConsoleAndExecute();
                     break;
         }*/
             Server.execute();
